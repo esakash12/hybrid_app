@@ -1,25 +1,50 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.shrutipaath.app" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>শ্রুতিপাঠ</name>
-    <description>শিক্ষামূলক অডিও অ্যাপ</description>
-    <author email="dev@cordova.apache.org" href="https://cordova.apache.org">Apache Cordova Team</author>
+    <description>
+        শিক্ষামূলক অডিও অ্যাপ
+    </description>
+    <author email="dev@cordova.apache.org" href="https://cordova.apache.org">
+        Apache Cordova Team
+    </author>
+    
+    <!-- অ্যাপের মূল কনটেন্ট -->
     <content src="index.html" />
+    
+    <!-- নেটওয়ার্ক অ্যাক্সেস -->
     <access origin="*" />
+    
+    <!-- বিভিন্ন লিঙ্কে যাওয়ার অনুমতি -->
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
-    <preference name="ScrollEnabled" value="false" />
-    <preference name="DisallowOverscroll" value="true" />
-    <!-- config.xml -->
+    <allow-intent href="tel:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
+    
+    <!-- প্ল্যাটফর্ম-ভিত্তিক কনফিগারেশন -->
     <platform name="android">
         <allow-intent href="market:*" />
-        <!-- === নতুন লাইনগুলো এখানে যোগ করুন === -->
+        
+        <!-- === সার্ভিস ওয়ার্কারের জন্য Ionic WebView কনফিগারেশন === -->
+        <!-- অ্যাপকে http প্রোটোকল ব্যবহার করতে বলা হচ্ছে -->
         <preference name="Scheme" value="http" />
+        <!-- অ্যাপের লোকাল সার্ভারের ঠিকানা -->
         <preference name="Hostname" value="localhost" />
-        <!-- === নতুন লাইন শেষ === -->
+        
+        <!-- অন্যান্য অ্যান্ড্রয়েড-এর জন্য ভালো কিছু preference -->
+        <preference name="ScrollEnabled" value="false" />
+        <preference name="Backup" value="false" />
+        <preference name="SplashMaintainAspectRatio" value="true" />
+        <preference name="FadeSplashScreenDuration" value="300" />
+        <preference name="SplashShowOnlyFirstTime" value="false" />
+        <preference name="SplashScreen" value="screen" />
+        <preference name="SplashScreenDelay" value="3000" />
     </platform>
+    
     <platform name="ios">
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
     </platform>
+
 </widget>
