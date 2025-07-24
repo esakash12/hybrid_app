@@ -1,4 +1,4 @@
-name: Build Cordova Android APK
+name: Build Hybrid App APK
 
 on:
   push:
@@ -6,11 +6,11 @@ on:
       - main
 
 jobs:
-  build-android:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Set up JDK 17
@@ -23,34 +23,24 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '18'
-
-      - name: Install Cordova
-        run: npm install -g cordova
-
-      - name: Create Cordova Project and prepare files
+      
+      - name: Prepare Cordova Project
         run: |
-          cordova create temp_cordova com.shrutipaath.app "ShrutiPaath"
-          rm -rf temp_cordova/www
-          mkdir temp_cordova/www
-          # এখন css, js, img, index.html, এবং sw.js সবকিছু কপি করা হচ্ছে
-          cp -r css js img index.html sw.js temp_cordova/www/
-          cp config.xml temp_cordova/
-
-      - name: Add platforms and plugins
-        working-directory: ./temp_cordova
-        run: |
+          npm install -g cordova
           cordova platform add android
+          rm -rf www/*
+          # img ফোল্ডার এবং sw.js ফাইল এখন কপি করা হচ্ছে
+          cp -r css js img index.html sw.js config.xml www/
           cordova plugin add cordova-plugin-file
           cordova plugin add cordova-plugin-file-transfer
           cordova plugin add cordova-plugin-media
           cordova telemetry off
 
-      - name: Build Android App (Debug Mode)
-        working-directory: ./temp_cordova
+      - name: Build Android App (Debug)
         run: cordova build android
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: shrutipaath-hybrid-apk
-          path: temp_cordova/platforms/android/app/build/outputs/apk/debug/app-debug.apk
+          path: platforms/android/app/build/outputs/apk/debug/app-debug.apk
