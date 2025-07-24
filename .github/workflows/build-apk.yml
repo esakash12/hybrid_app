@@ -1,4 +1,4 @@
-name: Build Hybrid App APK
+name: Build Cordova Android APK
 
 on:
   push:
@@ -6,11 +6,11 @@ on:
       - main
 
 jobs:
-  build:
+  build-android:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Set up JDK 17
@@ -23,21 +23,38 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '18'
-      
-      - name: Install Cordova and plugins
+
+      - name: Install Cordova
+        run: npm install -g cordova
+
+      - name: Create Cordova Project and prepare files
         run: |
-          npm install -g cordova
+          cordova create temp_cordova com.shrutipaath.app "ShrutiPaath"
+          rm -rf temp_cordova/www
+          mkdir temp_cordova/www
+          cp -r css js index.html temp_cordova/www/
+          cp config.xml temp_cordova/
+
+      - name: Add platforms and plugins
+        working-directory: ./temp_cordova
+        run: |
           cordova platform add android
           cordova plugin add cordova-plugin-file
           cordova plugin add cordova-plugin-file-transfer
           cordova plugin add cordova-plugin-media
           cordova telemetry off
 
-      - name: Build Android App (Debug)
+      # === পরিবর্তন ১: --release ফ্ল্যাগটি সরানো হয়েছে ===
+      - name: Build Android App (Debug Mode)
+        working-directory: ./temp_cordova
         run: cordova build android
 
+      # ডিবাগিং ধাপটি এখন আর প্রয়োজন নেই, তাই মুছে ফেলা হলো
+
+      # === পরিবর্তন ২: আপলোড ধাপটি সক্রিয় করা হয়েছে এবং পাথ পরিবর্তন করা হয়েছে ===
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: shrutipaath-hybrid-apk
-          path: platforms/android/app/build/outputs/apk/debug/app-debug.apk
+          # পাথটি এখন debug ফোল্ডারের জন্য সেট করা হয়েছে
+          path: temp_cordova/platforms/android/app/build/outputs/apk/debug/app-debug.apk
