@@ -58,11 +58,25 @@
     <script src="cordova.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <!-- index.html -->
+    <!-- ... আগের সব কোড ... -->
     <script src="js/app.js"></script>
+
+    <!-- === আপডেটেড সার্ভিস ওয়ার্কার রেজিস্ট্রেশন স্ক্রিপ্ট === -->
     <script>
       if ('serviceWorker' in navigator) {
+        // Cordova অ্যাপের জন্য সঠিক পাথ ব্যবহার করা
+        // window.location.pathname এর মাধ্যমে আমরা বর্তমান ফাইলের ডিরেক্টরি পাই
+        // এবং তার সাথে sw.js যোগ করি।
+        const swPath = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1) + 'sw.js';
+        
         window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js').then(reg => console.log('SW registered.')).catch(err => console.log('SW registration failed:', err));
+          navigator.serviceWorker.register(swPath)
+            .then((reg) => {
+              console.log('Service worker registered successfully at path:', swPath);
+            }).catch((err) => {
+              console.log('Service worker registration failed:', err);
+            });
         });
       }
     </script>
