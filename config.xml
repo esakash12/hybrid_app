@@ -7,14 +7,8 @@
     <author email="dev@cordova.apache.org" href="https://cordova.apache.org">
         Apache Cordova Team
     </author>
-    
-    <!-- অ্যাপের মূল কনটেন্ট -->
     <content src="index.html" />
-    
-    <!-- নেটওয়ার্ক অ্যাক্সেস -->
     <access origin="*" />
-    
-    <!-- বিভিন্ন লিঙ্কে যাওয়ার অনুমতি -->
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />
@@ -22,29 +16,24 @@
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
     
-    <!-- প্ল্যাটফর্ম-ভিত্তিক কনফিগারেশন -->
+    <!-- === স্প্ল্যাশ স্ক্রিন কনফিগারেশন === -->
+    <preference name="SplashMaintainAspectRatio" value="true" />
+    <preference name="FadeSplashScreenDuration" value="300" />
+    <preference name="SplashShowOnlyFirstTime" value="false" />
+    <preference name="SplashScreen" value="screen" />
+    <!-- সময় বাড়ানো হচ্ছে এবং অটো-হাইড বন্ধ করা হচ্ছে -->
+    <preference name="SplashScreenDelay" value="10000" />
+    <preference name="AutoHideSplashScreen" value="false" /> 
+
     <platform name="android">
         <allow-intent href="market:*" />
-        
-        <!-- === সার্ভিস ওয়ার্কারের জন্য Ionic WebView কনফিগারেশন === -->
-        <!-- অ্যাপকে http প্রোটোকল ব্যবহার করতে বলা হচ্ছে -->
         <preference name="Scheme" value="http" />
-        <!-- অ্যাপের লোকাল সার্ভারের ঠিকানা -->
         <preference name="Hostname" value="localhost" />
-        
-        <!-- অন্যান্য অ্যান্ড্রয়েড-এর জন্য ভালো কিছু preference -->
-        <preference name="ScrollEnabled" value="false" />
         <preference name="Backup" value="false" />
-        <preference name="SplashMaintainAspectRatio" value="true" />
-        <preference name="FadeSplashScreenDuration" value="300" />
-        <preference name="SplashShowOnlyFirstTime" value="false" />
-        <preference name="SplashScreen" value="screen" />
-        <preference name="SplashScreenDelay" value="3000" />
     </platform>
     
     <platform name="ios">
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
     </platform>
-
 </widget>
