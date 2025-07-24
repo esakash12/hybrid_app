@@ -32,7 +32,7 @@ jobs:
           cordova create temp_cordova com.shrutipaath.app "ShrutiPaath"
           rm -rf temp_cordova/www
           mkdir temp_cordova/www
-          cp -r css js img index.html sw.js temp_cordova/www/
+          cp -r css js img index.html sw.js config.xml temp_cordova/www/
           cp config.xml temp_cordova/
 
       - name: Add platforms and plugins
@@ -43,12 +43,12 @@ jobs:
           cordova plugin add cordova-plugin-file-transfer
           cordova plugin add cordova-plugin-media
           cordova plugin add cordova-plugin-ionic-webview
+          cordova plugin add cordova-plugin-splashscreen
           cordova telemetry off
 
       - name: Build Android App (Debug)
-        run: cordova build android
         working-directory: ./temp_cordova
-        
+        run: cordova build android
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
