@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.shrutipaath.app" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>শ্রুতিপাঠ</name>
+    <description>শিক্ষামূলক অডিও অ্যাপ</description>
+    <author email="dev@cordova.apache.org" href="https://cordova.apache.org">Apache Cordova Team</author>
+    <content src="index.html" />
+    <access origin="*" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <preference name="ScrollEnabled" value="false" />
+    <preference name="DisallowOverscroll" value="true" />
+</widget>

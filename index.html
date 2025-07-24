@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:; script-src 'self' https://www.gstatic.com 'unsafe-inline' 'unsafe-eval'; connect-src 'self' https://firestore.googleapis.com wss://*.firebaseio.com">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>শ্রুতিপাঠ</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="app-wrapper">
+        <header>
+            <img src="img/logo.png" alt="Logo" class="logo">
+            <h1>শ্রুতিপাঠ</h1>
+            <button id="downloads-button" class="header-button" title="ডাউনলোডস">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            </button>
+        </header>
+
+        <div id="scrolling-notice-container">
+            <p id="scrolling-notice-text"></p>
+        </div>
+
+        <main id="app-container">
+            <div id="loading-view" class="view active">
+                <div class="spinner"></div>
+                <p>লোড হচ্ছে...</p>
+            </div>
+            <div id="home-view" class="view">
+                <div id="subject-list" class="grid-container"></div>
+            </div>
+            <div id="subject-view" class="view">
+                <button id="back-to-home" class="back-button">← ফিরে যান</button>
+                <h2 id="subject-title"></h2>
+                <div id="chapter-list"></div>
+            </div>
+            <div id="downloads-view" class="view">
+                <button id="back-to-home-from-downloads" class="back-button">← ফিরে যান</button>
+                <h2>ডাউনলোড করা ফাইল</h2>
+                <div id="download-list"></div>
+            </div>
+        </main>
+
+        <footer>
+            <p id="now-playing">কিছু বাজছে না</p>
+            <audio id="audio-player" controls></audio>
+        </footer>
+
+        <div id="popup-notice-overlay">
+            <div id="popup-notice">
+                <h3 id="popup-title"></h3>
+                <p id="popup-message"></p>
+                <button id="popup-close-button"></button>
+            </div>
+        </div>
+    </div>
+
+    <script src="cordova.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js').then(reg => console.log('SW registered.')).catch(err => console.log('SW registration failed:', err));
+        });
+      }
+    </script>
+</body>
+</html>
