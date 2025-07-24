@@ -27,40 +27,30 @@ jobs:
       - name: Install Cordova
         run: npm install -g cordova
 
-      # --- এই ধাপটি এখন সম্পূর্ণ সঠিক ---
       - name: Create Cordova project and copy all necessary files
         run: |
-          # 1. একটি অস্থায়ী Cordova প্রজেক্ট তৈরি করা
           cordova create temp_cordova com.shrutipaath.app "ShrutiPaath"
-          
-          # 2. Cordova প্রজেক্টের ডিফল্ট www ফোল্ডারটি ডিলিট করা
           rm -rf temp_cordova/www
-          
-          # 3. আমাদের নিজেদের প্রজেক্টের সমস্ত ফাইল দিয়ে www ফোল্ডার তৈরি করা
-          # (এখানে আমরা css, js, img, index.html, sw.js সবকিছু কপি করছি)
           mkdir temp_cordova/www
           cp -r css js img index.html sw.js temp_cordova/www/
-          
-          # 4. আমাদের config.xml ফাইলটিকে Cordova প্রজেক্টের রুটে কপি করা
           cp config.xml temp_cordova/
 
       - name: Add platforms and plugins
-        # working-directory ব্যবহার করে নিশ্চিত করা হচ্ছে যে কমান্ডগুলো সঠিক জায়গায় চলছে
         working-directory: ./temp_cordova
         run: |
           cordova platform add android
           cordova plugin add cordova-plugin-file
           cordova plugin add cordova-plugin-file-transfer
           cordova plugin add cordova-plugin-media
+          cordova plugin add cordova-plugin-ionic-webview
           cordova telemetry off
 
       - name: Build Android App (Debug)
-        working-directory: ./temp_cordova
         run: cordova build android
+        working-directory: ./temp_cordova
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: shrutipaath-hybrid-apk
-          # পাথটি এখন temp_cordova ফোল্ডারের ভেতরে থাকবে
           path: temp_cordova/platforms/android/app/build/outputs/apk/debug/app-debug.apk
